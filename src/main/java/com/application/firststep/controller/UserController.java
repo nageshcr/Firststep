@@ -59,7 +59,9 @@ public class UserController {
 		if(passwordChangeDto == null || passwordChangeDto.getUserName() == null && passwordChangeDto.getMobileNo() == null && passwordChangeDto.getEmail() == null) {
 			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Please provide required fields", changedPassword);
 		}
-		if(passwordChangeDto.getPassword() == null) return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Password cannot be empty", changedPassword);
+		if(passwordChangeDto.getPassword() == null || passwordChangeDto.getNewPassword() == null) {
+			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Password cannot be empty", changedPassword);
+		}
 
 		changedPassword  = accountService.changePassword(passwordChangeDto);
 		

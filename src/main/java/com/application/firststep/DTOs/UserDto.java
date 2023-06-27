@@ -8,6 +8,18 @@ public class UserDto {
 	private String email;
 	private String mobileNo;
 	private String password;
+	private String userName;
+	private String city;
+	private String college;
+	private String refferalCode;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public String getPassword() {
 		return password;
@@ -57,10 +69,35 @@ public class UserDto {
 		this.mobileNo = mobileNo;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCollege() {
+		return college;
+	}
+
+	public void setCollege(String college) {
+		this.college = college;
+	}
+
+	public String getRefferalCode() {
+		return refferalCode;
+	}
+
+	public void setRefferalCode(String refferalCode) {
+		this.refferalCode = refferalCode;
+	}
+
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", mobileNo=" + mobileNo + ", password=" + password + "]";
+				+ ", mobileNo=" + mobileNo + ", password=" + password + ", userName=" + userName + ", city=" + city
+				+ ", college=" + college + ", refferalCode=" + refferalCode + "]";
 	}
 
 

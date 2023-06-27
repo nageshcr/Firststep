@@ -11,7 +11,7 @@ import com.application.firststep.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 	
-	
 	User findByMobileNumber(String mobileNumber);
-
+	User findByEmailId(String email);
+	User findByUserName(String userName);
 }

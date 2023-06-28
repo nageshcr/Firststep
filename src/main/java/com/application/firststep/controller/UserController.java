@@ -32,7 +32,7 @@ public class UserController {
 			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Password cannot be empty",
 					savedUser);
 		if (userDto.getMobileNo() == null )
-			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Email Id or Mobile is empty",
+			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Mobile Number cannot be empty",
 					savedUser);
 
 		savedUser = accountService.saveUser(userDto);

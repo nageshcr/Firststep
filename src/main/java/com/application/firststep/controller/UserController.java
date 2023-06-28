@@ -36,15 +36,15 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<Object> login(@RequestBody UserLoginDto userLoginDto) {
+	public ResponseEntity<Object> login(@RequestBody UserDto userDto) {
 		User loggedUser = null;
 
-		if(userLoginDto == null || userLoginDto.getUserName() == null && userLoginDto.getMobileNo() == null && userLoginDto.getEmail() == null) {
+		if(userDto == null || userDto.getUserName() == null && userDto.getMobileNo() == null && userDto.getEmail() == null) {
 			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Please provide required fields", loggedUser);
 		}
-		if(userLoginDto.getPassword() == null) return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Password cannot be empty", loggedUser);
+		if(userDto.getPassword() == null) return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Password cannot be empty", loggedUser);
 
-		loggedUser = accountService.loginUser(userLoginDto);
+		loggedUser = accountService.loginUser(userDto);
 		
 		if(loggedUser != null) {
 			return ResponseHandler.generateResponse(HttpStatus.ACCEPTED, true, "Logged In successfuly", loggedUser);

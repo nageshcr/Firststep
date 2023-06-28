@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.application.firststep.DTOs.*;
+
+import com.application.firststep.DTOs.PasswordChangeDto;
+import com.application.firststep.DTOs.UserDto;
 import com.application.firststep.model.User;
 import com.application.firststep.services.AccountService;
 
@@ -20,67 +22,67 @@ public class UserController {
 	@PostMapping("/signup")
 	public ResponseEntity<Object> signup(@RequestBody UserDto userDto) {
 		User savedUser = null;
-		if(userDto == null) return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Please provide required fields", savedUser);
-		if(userDto.getFirstName() == null) return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "First Name cannot be empty", savedUser);
-		if(userDto.getPassword() == null) return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Password cannot be empty", savedUser);
-		if(userDto.getUserName() == null) return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "User Name cannot be null", savedUser);
-		if(userDto.getMobileNo() == null && userDto.getEmail() == null) return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Email Id or Mobile is empty", savedUser);
-			
+		if (userDto == null)
+			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Please provide required fields",
+					savedUser);
+		if (userDto.getFirstName() == null)
+			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "First Name cannot be empty",
+					savedUser);
+		if (userDto.getPassword() == null)
+			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Password cannot be empty",
+					savedUser);
+		if (userDto.getMobileNo() == null )
+			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Email Id or Mobile is empty",
+					savedUser);
+
 		savedUser = accountService.saveUser(userDto);
 
 		if (savedUser != null) {
 			return ResponseHandler.generateResponse(HttpStatus.CREATED, true, "User Successully Signedup", savedUser);
 		}
-		return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "User Already Exists Please Provide Different Mobile number", savedUser);
+		return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false,
+				"User Already Exists Please Provide Different Mobile number", savedUser);
 
 	}
 
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody UserDto userDto) {
-		User loggedUser = null;
 
-		if(userDto == null || userDto.getUserName() == null && userDto.getMobileNo() == null && userDto.getEmail() == null) {
-			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Please provide required fields", loggedUser);
+		if (userDto == null || userDto.getMobileNo() == null || userDto.getPassword() == null) {
+			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Mobile Number or Password cannot be empty",
+					userDto);
 		}
-		if(userDto.getPassword() == null) return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Password cannot be empty", loggedUser);
 
-		loggedUser = accountService.loginUser(userDto);
-		
-		if(loggedUser != null) {
-			return ResponseHandler.generateResponse(HttpStatus.ACCEPTED, true, "Logged In successfuly", loggedUser);
+		User loggedInUser = accountService.loginUser(userDto);
+
+		if (loggedInUser != null) {
+			return ResponseHandler.generateResponse(HttpStatus.ACCEPTED, true, "Logged In successfuly", loggedInUser);
 		}
-		return ResponseHandler.generateResponse(HttpStatus.CONFLICT, false,"Wrong Password", loggedUser);
+		return ResponseHandler.generateResponse(HttpStatus.CONFLICT, false, "Mobile Number or Password is wrong", loggedInUser);
 	}
-	
+
 	@PostMapping("/changePassword")
-	public ResponseEntity<Object> changePassword(@RequestBody PasswordChangeDto passwordChangeDto) {
-		User changedPassword  = null;
-		
-		if(passwordChangeDto == null || passwordChangeDto.getUserName() == null && passwordChangeDto.getMobileNo() == null && passwordChangeDto.getEmail() == null) {
-			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Please provide required fields", changedPassword);
-		}
-		if(passwordChangeDto.getPassword() == null || passwordChangeDto.getNewPassword() == null) {
-			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Password cannot be empty", changedPassword);
+	public ResponseEntity<Object> changePassword(@RequestBody UserDto userDto) {
+
+		if (userDto == null || userDto.getMobileNo() == null) {
+			return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Mobile Number or Password cannot be empty",
+					userDto);
 		}
 
-		changedPassword  = accountService.changePassword(passwordChangeDto);
-		
-		if(changedPassword != null) {
-			return ResponseHandler.generateResponse(HttpStatus.ACCEPTED, true, "Password changed successfully", changedPassword);	
+		User changedPassword = accountService.changePassword(userDto);
+
+		if (changedPassword != null) {
+			return ResponseHandler.generateResponse(HttpStatus.ACCEPTED, true, "Password changed successfully",
+					changedPassword);
 		}
-		return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Old Password did not match", changedPassword);
+		return ResponseHandler.generateResponse(HttpStatus.BAD_REQUEST, false, "Mobile  Number does not exist",
+				changedPassword);
 
 	}
-	
+
 	@GetMapping("/hello")
 	public String hello() {
 		return "hello world";
 	}
-	
-	
-	
-	
-
-	
 
 }

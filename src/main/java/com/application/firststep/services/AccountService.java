@@ -6,7 +6,7 @@ import com.application.firststep.model.User;
 public interface AccountService {
 
 	User saveUser(UserDto userDto);
-	User changePassword(PasswordChangeDto passwordChangeDto);
+	User changePassword(UserDto userDto);
 	User loginUser(UserDto userDto);
 
 }

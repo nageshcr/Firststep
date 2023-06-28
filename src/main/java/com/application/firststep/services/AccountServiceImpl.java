@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public User loginUser(UserLoginDto userDto) {
+	public User loginUser(UserDto userDto) {
 		String password = userDto.getPassword();
 		
 		User userByEmail = userRepository.findByEmailId(userDto.getEmail());

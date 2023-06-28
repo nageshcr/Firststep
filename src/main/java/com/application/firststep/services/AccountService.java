@@ -7,6 +7,6 @@ public interface AccountService {
 
 	User saveUser(UserDto userDto);
 	User changePassword(PasswordChangeDto passwordChangeDto);
-	User loginUser(UserLoginDto userDto);
+	User loginUser(UserDto userDto);
 
 }
